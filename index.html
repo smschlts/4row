@@ -8,6 +8,14 @@
                 border: 2px solid blue;
                 width: 30px;
                 height: 30px;
+                text-align: center;
+            }
+            .dot {
+                height: 25px;
+                width: 25px;
+                background-color: #bbb;
+                border-radius: 50%;
+                display: inline-block;
             }
         </style>
 
@@ -33,12 +41,17 @@
                         cell.id = getIdFromCoord([c, r])
                         cell.setAttribute('onmouseover', "highlightColumn(this, true)");
                         cell.setAttribute('onmouseout', "highlightColumn(this, false)");
+                        cell.setAttribute('onclick', "insertDisc(this)");
 
                         row.appendChild(cell);
                     }
                     table.appendChild(row);
                 }
                 div.appendChild(table);
+            }
+
+            function insertDisc(element) {
+                element.innerHTML = "<span class='dot' />"
             }
 
             function getIdFromCoord(coord) {
@@ -64,7 +77,8 @@
 
 
             function play() {
-                createEmptyField()
+                createEmptyField();
+                turn = 0;
             }
         </script>
     </head>
