@@ -17,6 +17,15 @@
                 border-radius: 50%;
                 display: inline-block;
             }
+
+            .dot#player1 {
+                background-color: lightcoral;
+            }
+
+            .dot#player2 {
+                background-color: lightskyblue;
+            }
+
         </style>
 
         <!-- javascript-->
@@ -28,7 +37,7 @@
             ** coords are formated as [x-coordinate|column, y-coordinate|row]
             */
 
-            var discColors = ['red', 'yellow']
+            var discColors = ['lightcoral', 'lightskyblue'] // Not used yet
             var fieldHeight = 6;
             var fieldWidth = 7;
             var fieldArray
@@ -87,7 +96,11 @@
                     fieldArray[row][coord[0]] = 1;
 
                     var newElement = document.getElementById(getIdFromCoord([coord[0], row]));
-                    newElement.innerHTML = "<span class='dot' />"
+
+                    newElement.innerHTML = "<span class='dot' id='player" + (turn%2+1) + "' />"
+
+                    // Update turn
+                    turn++;
                 }
                 else {
                     console.log("Column " + coord[0] + " full");
