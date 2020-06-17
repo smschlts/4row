@@ -93,7 +93,7 @@
 
                 // Add disc if spot available
                 if (row != -1) {
-                    fieldArray[row][coord[0]] = 1;
+                    fieldArray[row][coord[0]] = turn%2+1;
 
                     var newElement = document.getElementById(getIdFromCoord([coord[0], row]));
 
