@@ -25,6 +25,7 @@
             ** Id's are formated cell - x-coordinate|column - y-coordinate|row; with topleft being [0,0]
             ** fieldArray is formated as fieldArray[y-coordinate|row][x-coordinate|column]; with [0,0] being topleft
             **       to make sure the array is an easy representation of the board
+            ** coords are formated as [x-coordinate|column, y-coordinate|row]
             */
 
             var discColors = ['red', 'yellow']
@@ -65,11 +66,34 @@
                 }
             }
 
+            function getLowestRowInColumn(col) {
+                for (var r = fieldHeight-1; r >= 0; r--) {
+                    if (fieldArray[r][col] == 0) {
+                        return r;
+                    }
+                }
+                return -1;
+            }
+
             function insertDisc(element) {
-                element.innerHTML = "<span class='dot' />"
+                // Get coordinate of click
                 var coord = getCoordFromId(element.id);
-                fieldArray[coord[1]][coord[0]] = 1;
+
+                // Get lowest available row position in column
+                var row = getLowestRowInColumn(coord[0]);
+
+                // Add disc if spot available
+                if (row != -1) {
+                    fieldArray[row][coord[0]] = 1;
+
+                    var newElement = document.getElementById(getIdFromCoord([coord[0], row]));
+                    newElement.innerHTML = "<span class='dot' />"
+                }
+                else {
+                    console.log("Column " + coord[0] + " full");
+                }
                 
+
                 console.log(fieldArray);
             }
 
