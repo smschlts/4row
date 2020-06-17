@@ -21,9 +21,17 @@
 
         <!-- javascript-->
         <script>
+            /* Notes:
+            ** Id's are formated cell - x-coordinate|column - y-coordinate|row; with topleft being [0,0]
+            ** fieldArray is formated as fieldArray[y-coordinate|row][x-coordinate|column]; with [0,0] being topleft
+            **       to make sure the array is an easy representation of the board
+            */
+
             var discColors = ['red', 'yellow']
             var fieldHeight = 6;
             var fieldWidth = 7;
+            var fieldArray
+            turn = 0;
 
             function createEmptyField() {
                 var div = document.getElementById("fieldDiv");
@@ -48,10 +56,21 @@
                     table.appendChild(row);
                 }
                 div.appendChild(table);
+
+                // Create field array
+                fieldArray = new Array(fieldHeight);
+                for (var i = 0; i < fieldHeight; i++) {
+                    // Create rows and initialize with zeroes
+                    fieldArray[i] = new Array(fieldWidth).fill(0);
+                }
             }
 
             function insertDisc(element) {
                 element.innerHTML = "<span class='dot' />"
+                var coord = getCoordFromId(element.id);
+                fieldArray[coord[1]][coord[0]] = 1;
+                
+                console.log(fieldArray);
             }
 
             function getIdFromCoord(coord) {
