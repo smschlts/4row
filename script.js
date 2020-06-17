@@ -106,7 +106,7 @@ function highlightColumn(element, doHighlight) {
     // highlight each cell in column
     for (var r = 0; r < fieldHeight; r++) {
         var cell = document.getElementById(getIdFromCoord([coord[0], r]));
-        cell.style.backgroundColor = doHighlight ? "gray" : "white";
+        cell.style.backgroundColor = doHighlight ? "lightgray" : "white";
     }
 }
 
