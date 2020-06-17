@@ -70,6 +70,16 @@ function insertDisc(element) {
         // Update turn
         turn++;
         document.getElementById("turn").innerHTML = turn+1;
+
+        // Make current player name bold
+        if (turn%2) {
+            document.getElementById("player2Text").style.fontWeight = "bold";
+            document.getElementById("player1Text").style.fontWeight = "normal";
+        }
+        else {
+            document.getElementById("player1Text").style.fontWeight = "bold";
+            document.getElementById("player2Text").style.fontWeight = "normal";
+        }
     }
     else {
         console.log("Column " + coord[0] + " full");
@@ -114,6 +124,8 @@ function updateLayoutStart() {
 
     //Update turn
     document.getElementById("turn").innerHTML = turn+1;
+    document.getElementById("player1Text").style.fontWeight = "bold";
+    document.getElementById("player2Text").style.fontWeight = "normal";
 }
 
 
