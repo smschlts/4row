@@ -30,13 +30,36 @@
                     var row = document.createElement("tr");
                     for (var c = 0; c < fieldWidth; c++) {
                         var cell = document.createElement("td");
-                        cell.id = "cell-" + c + "-" + r
+                        cell.id = getIdFromCoord([c, r])
+                        cell.setAttribute('onmouseover', "highlightColumn(this, true)");
+                        cell.setAttribute('onmouseout', "highlightColumn(this, false)");
 
                         row.appendChild(cell);
                     }
                     table.appendChild(row);
                 }
                 div.appendChild(table);
+            }
+
+            function getIdFromCoord(coord) {
+                return "cell-" + coord[0] + "-" + coord[1];
+            }
+
+            function getCoordFromId(id) {
+                var splitId = id.split("-");
+                return [splitId[1], splitId[2]];
+            }
+
+            function highlightColumn(element, doHighlight) {
+                // Get hover coordinates
+                var coord = getCoordFromId(element.id);
+                console.log("Hoover coordinates: ", coord);
+
+                // highlight each cell in column
+                for (var r = 0; r < fieldHeight; r++) {
+                    var cell = document.getElementById(getIdFromCoord([coord[0], r]));
+                    cell.style.backgroundColor = doHighlight ? "gray" : "white";
+                }
             }
 
 
