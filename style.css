@@ -1,0 +1,33 @@
+table {
+    margin: 0 auto;
+}
+
+td {
+    border: 2px solid blue;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+}
+.dot {
+    height: 25px;
+    width: 25px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+}
+/* not used */
+.dot#player1 {
+    background-color: lightcoral;
+}
+/* not used */
+.dot#player2 {
+    background-color: lightskyblue;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
