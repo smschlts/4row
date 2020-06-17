@@ -4,6 +4,10 @@
         <meta charset="UTF-8">
         <!-- css-->
         <style>
+            table {
+                margin: 0 auto;
+            }
+
             td {
                 border: 2px solid blue;
                 width: 30px;
@@ -17,15 +21,22 @@
                 border-radius: 50%;
                 display: inline-block;
             }
-
+            /* not used */
             .dot#player1 {
                 background-color: lightcoral;
             }
-
+            /* not used */
             .dot#player2 {
                 background-color: lightskyblue;
             }
 
+            .left {
+                float: left;
+            }
+
+            .right {
+                float: right;
+            }
         </style>
 
         <!-- javascript-->
@@ -37,7 +48,7 @@
             ** coords are formated as [x-coordinate|column, y-coordinate|row]
             */
 
-            var discColors = ['lightcoral', 'lightskyblue'] // Not used yet
+            var discColors = ['lightcoral', 'lightskyblue']
             var fieldHeight = 6;
             var fieldWidth = 7;
             var fieldArray
@@ -97,10 +108,11 @@
 
                     var newElement = document.getElementById(getIdFromCoord([coord[0], row]));
 
-                    newElement.innerHTML = "<span class='dot' id='player" + (turn%2+1) + "' />"
+                    newElement.innerHTML = "<span class='dot' style='background-color: "+ discColors[turn%2] +"' id='player" + (turn%2+1) + "' />"
 
                     // Update turn
                     turn++;
+                    document.getElementById("turn").innerHTML = turn+1;
                 }
                 else {
                     console.log("Column " + coord[0] + " full");
@@ -131,17 +143,57 @@
                 }
             }
 
+            function updateLayoutStart() {
+                // Update player names
+                document.getElementById("player1Text").innerHTML = document.getElementById("player1InputName").value;
+                document.getElementById("player2Text").innerHTML = document.getElementById("player2InputName").value;
+
+                // TODO replace string player name if empty or give error
+                // Update player colors
+                discColors[0] =  document.getElementById("player1InputColor").value;
+                discColors[1] =  document.getElementById("player2InputColor").value;
+                document.getElementById("player1").style.backgroundColor = document.getElementById("player1InputColor").value;
+                document.getElementById("player2").style.backgroundColor = document.getElementById("player2InputColor").value;
+
+                //Update turn
+                document.getElementById("turn").innerHTML = turn+1;
+            }
+
 
             function play() {
-                createEmptyField();
                 turn = 0;
+                createEmptyField();
+                updateLayoutStart();
             }
         </script>
     </head>
         
     <title>Titel</title>
     <body>
-        <input type="button" id="playButton" value="play" onclick="play()">
+        <div>
+            <input type="text" placeholder="Player 1" id="player1InputName">
+            <input type="color" value="#FF0000" id="player1InputColor">
+            <input type="text" placeholder="Player 2" id="player2InputName">
+            <input type="color" value="#FFFF00" id="player2InputColor">
+            <input type="button" id="playButton" value="play" onclick="play()">
+        </div>
         <div id="fieldDiv"></div>
+        
+        <div>
+            <h3>
+                <span class="left">
+                    <span class='dot' id='player1'></span>
+                    <span id="player1Text">Player 1</span>
+                </span>
+                <span>
+                    VS
+                </span>
+                <span class="right">
+                    <span id="player2Text">Player 2</span>
+                    <span class='dot' id='player2'></span>
+                </span>
+            </h3>
+            Turn <b id="turn"> 1 </b>
+        </div>
     </body>
 </html>
