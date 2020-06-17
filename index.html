@@ -4,17 +4,51 @@
         <meta charset="UTF-8">
         <!-- css-->
         <style>
-
+            td {
+                border: 2px solid blue;
+                width: 30px;
+                height: 30px;
+            }
         </style>
 
         <!-- javascript-->
         <script>
-          
+            var discColors = ['red', 'yellow']
+            var fieldHeight = 6;
+            var fieldWidth = 7;
+
+            function createEmptyField() {
+                var div = document.getElementById("fieldDiv");
+
+                // Clean div if a table is already present
+                div.innerHTML = "";
+
+                var table = document.createElement("table");
+
+                // Add cells to table
+                for (var r = 0; r < fieldHeight; r++) {
+                    var row = document.createElement("tr");
+                    for (var c = 0; c < fieldWidth; c++) {
+                        var cell = document.createElement("td");
+                        cell.id = "cell-" + c + "-" + r
+
+                        row.appendChild(cell);
+                    }
+                    table.appendChild(row);
+                }
+                div.appendChild(table);
+            }
+
+
+            function play() {
+                createEmptyField()
+            }
         </script>
     </head>
         
     <title>Titel</title>
     <body>
-        
+        <input type="button" id="playButton" value="play" onclick="play()">
+        <div id="fieldDiv"></div>
     </body>
 </html>
