@@ -6,12 +6,13 @@ fieldArray is formated as fieldArray[y-coordinate|row][x-coordinate|column]; wit
 coords are formated as [x-coordinate|column, y-coordinate|row]
 */
 
-var discColors = ['lightcoral', 'lightskyblue']
-var fieldHeight = 6;
-var fieldWidth = 7;
+
+const fieldHeight = 6;
+const fieldWidth = 7;
 var fieldArray;
 var lowestPositions;
 var turn = 0;
+var discColors = ['lightcoral', 'lightskyblue']
 
 function createEmptyField() {
     var div = document.getElementById("fieldDiv");
@@ -20,6 +21,7 @@ function createEmptyField() {
     div.innerHTML = "";
 
     var table = document.createElement("table");
+    table.id = "fieldTable";
 
     // Add cells to table
     for (var r = 0; r < fieldHeight; r++) {
@@ -41,11 +43,11 @@ function createEmptyField() {
     fieldArray = new Array(fieldHeight);
     for (var i = 0; i < fieldHeight; i++) {
         // Create rows and initialize with zeroes
-        fieldArray[i] = new Uint8Array(fieldWidth).fill(0);
+        fieldArray[i] = new Array(fieldWidth).fill(0);
     }
 
     // Create lowest position array
-    lowestPositions = new Int8Array(fieldWidth).fill(fieldHeight - 1);
+    lowestPositions = new Array(fieldWidth).fill(fieldHeight - 1);
 }
 
 function insertDisc(element) {
@@ -77,6 +79,9 @@ function insertDisc(element) {
         // Update turn
         turn++;
         document.getElementById("turn").innerHTML = turn + 1;
+
+        // Save new move
+        saveGame();
 
         // Make current player name bold
         if (turn % 2) {
@@ -172,6 +177,47 @@ function checkWin(coord) {
     if (lengthSameNeighbors(coord, [1, 1], playerId) + lengthSameNeighbors(coord, [-1, -1], playerId) >= 3) { return true }
 
     return false;
+}
+
+function saveGame() {
+    if (typeof(Storage) !== "undefined") {
+        localStorage.setItem("turn", turn);
+        localStorage.setItem("board", JSON.stringify(fieldArray));
+        localStorage.setItem("lowest", JSON.stringify(lowestPositions));
+        localStorage.setItem("colors", JSON.stringify(discColors));
+        localStorage.setItem("names", JSON.stringify([document.getElementById("player1Text").innerHTML, document.getElementById("player2Text").innerHTML]))
+    }
+}
+
+function loadGame() {
+    if (typeof(Storage) !== "undefined") {
+        turn = parseInt(localStorage.turn);
+        fieldArray = JSON.parse(localStorage.board);
+        lowestPositions = JSON.parse(localStorage.lowest);
+        discColors = JSON.parse(localStorage.colors);
+        var names = JSON.parse(localStorage.names);
+
+        document.getElementById("player1Text").innerHTML = names[0];
+        document.getElementById("player2Text").innerHTML = names[1];
+        document.getElementById("turn").innerHTML = turn + 1;
+        document.getElementById("player1Text").style.fontWeight = turn % 2 ? "normal" : "bold";
+        document.getElementById("player2Text").style.fontWeight = turn % 2 ? "bold" : "normal";
+
+        var rows = document.getElementById("fieldTable").children;
+        for (var r = 0; r < fieldHeight; r++) {
+            var cells = rows[r].children;
+            for (var c = 0; c < fieldWidth; c++) {
+                var id = fieldArray[r][c];
+
+                if (id != 0) {
+                    var discSpan = document.createElement("span");
+                    discSpan.classList.add("dot");
+                    discSpan.style.backgroundColor = discColors[id - 1];
+                    cells[c].appendChild(discSpan);
+                }
+            }
+        }
+    }
 }
 
 function updateLayoutStart() {
