@@ -158,6 +158,21 @@ function checkWin(coord) {
         if (length >= 4) { return true; }
     }
 
+    // Check horizontal connection
+    var length = 1;
+    var c = coord[0] + 1;
+    while (c < fieldWidth && fieldArray[coord[1]][c] == playerId) {
+        length++;
+        c++;
+    }
+    var c = coord[0] - 1;
+    while (c >= 0 && fieldArray[coord[1]][c] == playerId) {
+        length++;
+        c--;
+    }
+    if (length >= 4) { return true; }
+
+
     return false;
 }
 
