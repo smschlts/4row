@@ -9,6 +9,10 @@ td {
     text-align: center;
 }
 
+.highlight {
+    background-color: lightgrey;
+}
+
 .dot {
     height: 25px;
     width: 25px;

@@ -26,7 +26,7 @@ function createEmptyField() {
         for (var c = 0; c < fieldWidth; c++) {
             var cell = document.createElement("td");
             cell.id = getIdFromCoord([c, r])
-            cell.setAttribute('onmouseover', "highlightColumn(this, true)");
+            cell.setAttribute('onmouseover', "highlightColumn(this)");
             cell.setAttribute('onmouseout', "highlightColumn(this, false)");
             cell.setAttribute('onclick', "insertDisc(this)");
 
@@ -97,7 +97,7 @@ function getCoordFromId(id) {
     return [splitId[1], splitId[2]];
 }
 
-function highlightColumn(element, doHighlight) {
+function highlightColumn(element, doHighlight = true) {
     // Get hover coordinates
     var coord = getCoordFromId(element.id);
     console.log("Hoover coordinates: ", coord);
@@ -105,7 +105,12 @@ function highlightColumn(element, doHighlight) {
     // highlight each cell in column
     for (var r = 0; r < fieldHeight; r++) {
         var cell = document.getElementById(getIdFromCoord([coord[0], r]));
-        cell.style.backgroundColor = doHighlight ? "lightgray" : "white";
+
+        if (doHighlight) {
+            cell.classList.add("highlight");
+        } else {
+            cell.classList.remove("highlight");
+        }
     }
 }
 
