@@ -19,6 +19,7 @@ td {
     background-color: #bbb;
     border-radius: 50%;
     display: inline-block;
+    pointer-events: none;
 }
 
 .left {

@@ -45,7 +45,7 @@ function createEmptyField() {
     }
 
     // Create lowest position array
-    lowestPositions = new Uint8Array(fieldWidth).fill(fieldHeight - 1);
+    lowestPositions = new Int8Array(fieldWidth).fill(fieldHeight - 1);
 }
 
 function insertDisc(element) {
@@ -62,12 +62,13 @@ function insertDisc(element) {
         lowestPositions[coord[0]] = lowestPositions[coord[0]] - 1;
 
         // Add disc to right cell in table
-        var updatedCell = document.getElementById(getIdFromCoord([coord[0], row]));
-        var discSpan = document.createElement("span");
-        discSpan.classList.add("dot");
-        discSpan.style.backgroundColor = discColors[turn % 2];
-        discSpan.id = "player" + (turn % 2 + 1); // Currently not used?
-        updatedCell.appendChild(discSpan);
+        // ----- As long as preview disc is exacly the same as this one, this code is not needed
+        // var updatedCell = document.getElementById(getIdFromCoord([coord[0], row]));
+        // var discSpan = document.createElement("span");
+        // discSpan.classList.add("dot");
+        // discSpan.style.backgroundColor = discColors[turn % 2];
+        // discSpan.id = "player" + (turn % 2 + 1); // Currently not used?
+        // updatedCell.appendChild(discSpan);
 
         // Update turn
         turn++;
@@ -81,6 +82,9 @@ function insertDisc(element) {
             document.getElementById("player1Text").style.fontWeight = "bold";
             document.getElementById("player2Text").style.fontWeight = "normal";
         }
+
+        // Trigger next disc preview, as there is no new mouse-enter
+        highlightColumn(document.getElementById(getIdFromCoord([coord[0], row])))
     } else {
         console.log("Column " + coord[0] + " full");
     }
@@ -112,6 +116,23 @@ function highlightColumn(element, doHighlight = true) {
         } else {
             cell.classList.remove("highlight");
         }
+    }
+
+    //Add disc preview
+    var lowestPosition = lowestPositions[coord[0]];
+    if (lowestPosition != -1) {
+        var updatedCell = document.getElementById(getIdFromCoord([coord[0], lowestPosition]));
+
+        if (doHighlight) {
+            var discSpan = document.createElement("span");
+            discSpan.classList.add("dot");
+            discSpan.style.backgroundColor = discColors[turn % 2];
+            discSpan.id = "player" + (turn % 2 + 1); // Currently not used?
+            updatedCell.appendChild(discSpan);
+        } else {
+            updatedCell.innerHTML = "";
+        }
+
     }
 }
 
