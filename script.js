@@ -62,8 +62,12 @@ function insertDisc(element) {
         lowestPositions[coord[0]] = lowestPositions[coord[0]] - 1;
 
         // Add disc to right cell in table
-        var newElement = document.getElementById(getIdFromCoord([coord[0], row]));
-        newElement.innerHTML = "<span class='dot' style='background-color: " + discColors[turn % 2] + "' id='player" + (turn % 2 + 1) + "' />"
+        var updatedCell = document.getElementById(getIdFromCoord([coord[0], row]));
+        var discSpan = document.createElement("span");
+        discSpan.classList.add("dot");
+        discSpan.style.backgroundColor = discColors[turn % 2];
+        discSpan.id = "player" + (turn % 2 + 1); // Currently not used?
+        updatedCell.appendChild(discSpan);
 
         // Update turn
         turn++;
