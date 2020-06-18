@@ -137,6 +137,21 @@ function highlightColumn(element, doHighlight = true) {
     }
 }
 
+function inBounds(coord) {
+    return coord[0] >= 0 && coord[1] >= 0 && coord[0] < fieldWidth && coord[1] < fieldHeight;
+}
+
+function lengthSameNeighbors(coord, dir, playerId) {
+    var len = 0;
+    var newCoord = [coord[0] + dir[0], coord[1] + dir[1]];
+    while (inBounds(newCoord) && fieldArray[newCoord[1]][newCoord[0]] == playerId) {
+        len++;
+        newCoord[0] += dir[0];
+        newCoord[1] += dir[1];
+    }
+    return len;
+}
+
 function checkWin(coord) {
     /*
     Note:
@@ -148,30 +163,9 @@ function checkWin(coord) {
     console.log(coord, playerId, fieldArray);
 
     // Check vertical connection
-    if (coord[1] <= fieldHeight - 4) { // must be tall enough to contain connection
-        var length = 1;
-        var r = coord[1] + 1;
-        while (r < fieldHeight && fieldArray[r][coord[0]] == playerId) {
-            length++;
-            r++;
-        }
-        if (length >= 4) { return true; }
-    }
-
+    if (lengthSameNeighbors(coord, [0, 1], playerId) >= 3) { return true }
     // Check horizontal connection
-    var length = 1;
-    var c = coord[0] + 1;
-    while (c < fieldWidth && fieldArray[coord[1]][c] == playerId) {
-        length++;
-        c++;
-    }
-    var c = coord[0] - 1;
-    while (c >= 0 && fieldArray[coord[1]][c] == playerId) {
-        length++;
-        c--;
-    }
-    if (length >= 4) { return true; }
-
+    if (lengthSameNeighbors(coord, [1, 0], playerId) + lengthSameNeighbors(coord, [-1, 0], playerId) >= 3) { return true }
 
     return false;
 }
