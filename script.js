@@ -38,7 +38,7 @@ function createEmptyField() {
     div.appendChild(table);
 
     // Create field array
-    fieldArray = new Uint8Array(fieldHeight);
+    fieldArray = new Array(fieldHeight);
     for (var i = 0; i < fieldHeight; i++) {
         // Create rows and initialize with zeroes
         fieldArray[i] = new Uint8Array(fieldWidth).fill(0);
@@ -70,6 +70,10 @@ function insertDisc(element) {
         // discSpan.id = "player" + (turn % 2 + 1); // Currently not used?
         // updatedCell.appendChild(discSpan);
 
+        if (checkWin([coord[0], row])) {
+            console.log("win");
+        }
+
         // Update turn
         turn++;
         document.getElementById("turn").innerHTML = turn + 1;
@@ -88,9 +92,6 @@ function insertDisc(element) {
     } else {
         console.log("Column " + coord[0] + " full");
     }
-
-
-    console.log(fieldArray);
 }
 
 function getIdFromCoord(coord) {
@@ -99,13 +100,13 @@ function getIdFromCoord(coord) {
 
 function getCoordFromId(id) {
     var splitId = id.split("-");
-    return [splitId[1], splitId[2]];
+    return [parseInt(splitId[1]), parseInt(splitId[2])];
 }
 
 function highlightColumn(element, doHighlight = true) {
     // Get hover coordinates
     var coord = getCoordFromId(element.id);
-    console.log("Hoover coordinates: ", coord);
+    //console.log("Hoover coordinates: ", coord);
 
     // highlight each cell in column
     for (var r = 0; r < fieldHeight; r++) {
@@ -134,6 +135,30 @@ function highlightColumn(element, doHighlight = true) {
         }
 
     }
+}
+
+function checkWin(coord) {
+    /*
+    Note:
+    As we know the game was not won the previous turn (otherwise no new discs can be inserted)
+    the new disc HAS to be in the winning connection if somebody won this turn.
+    */
+    var playerId = fieldArray[coord[1]][coord[0]];
+
+    console.log(coord, playerId, fieldArray);
+
+    // Check vertical connection
+    if (coord[1] <= fieldHeight - 4) { // must be tall enough to contain connection
+        var length = 1;
+        var r = coord[1] + 1;
+        while (r < fieldHeight && fieldArray[r][coord[0]] == playerId) {
+            length++;
+            r++;
+        }
+        if (length >= 4) { return true; }
+    }
+
+    return false;
 }
 
 function updateLayoutStart() {
