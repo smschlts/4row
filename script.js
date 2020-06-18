@@ -9,7 +9,8 @@ coords are formated as [x-coordinate|column, y-coordinate|row]
 var discColors = ['lightcoral', 'lightskyblue']
 var fieldHeight = 6;
 var fieldWidth = 7;
-var fieldArray
+var fieldArray;
+var lowestPositions;
 var turn = 0;
 
 function createEmptyField() {
@@ -37,20 +38,14 @@ function createEmptyField() {
     div.appendChild(table);
 
     // Create field array
-    fieldArray = new Array(fieldHeight);
+    fieldArray = new Uint8Array(fieldHeight);
     for (var i = 0; i < fieldHeight; i++) {
         // Create rows and initialize with zeroes
-        fieldArray[i] = new Array(fieldWidth).fill(0);
+        fieldArray[i] = new Uint8Array(fieldWidth).fill(0);
     }
-}
 
-function getLowestRowInColumn(col) {
-    for (var r = fieldHeight - 1; r >= 0; r--) {
-        if (fieldArray[r][col] == 0) {
-            return r;
-        }
-    }
-    return -1;
+    // Create lowest position array
+    lowestPositions = new Uint8Array(fieldWidth).fill(fieldHeight - 1);
 }
 
 function insertDisc(element) {
@@ -58,14 +53,16 @@ function insertDisc(element) {
     var coord = getCoordFromId(element.id);
 
     // Get lowest available row position in column
-    var row = getLowestRowInColumn(coord[0]);
+    var row = lowestPositions[coord[0]];
 
     // Add disc if spot available
     if (row != -1) {
+        // Mark array with right disc
         fieldArray[row][coord[0]] = turn % 2 + 1;
+        lowestPositions[coord[0]] = lowestPositions[coord[0]] - 1;
 
+        // Add disc to right cell in table
         var newElement = document.getElementById(getIdFromCoord([coord[0], row]));
-
         newElement.innerHTML = "<span class='dot' style='background-color: " + discColors[turn % 2] + "' id='player" + (turn % 2 + 1) + "' />"
 
         // Update turn
