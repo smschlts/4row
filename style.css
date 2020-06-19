@@ -71,4 +71,7 @@ td:after {
     font-size: 3vw;
     margin-left: 4vw;
     margin-right: 4vw;
+    white-space: pre-wrap;
+    overflow: hidden;
+    display: block;
 }

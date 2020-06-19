@@ -9,6 +9,7 @@ coords are formated as [x-coordinate|column, y-coordinate|row]
 
 const fieldHeight = 6;
 const fieldWidth = 7;
+const maxNameLength = 11;
 var fieldArray;
 var lowestPositions;
 var turn = 0;
@@ -242,8 +243,8 @@ function updateLayout() {
 
 function updateLayoutStart() {
     // Update player names
-    document.getElementById("player1Text").innerHTML = document.getElementById("player1InputName").value;
-    document.getElementById("player2Text").innerHTML = document.getElementById("player2InputName").value;
+    document.getElementById("player1Text").innerHTML = document.getElementById("player1InputName").value.slice(0, maxNameLength);
+    document.getElementById("player2Text").innerHTML = document.getElementById("player2InputName").value.slice(0, maxNameLength);
 
     // TODO replace string player name if empty or give error
     // Update player colors
@@ -261,3 +262,5 @@ function play() {
     createEmptyField();
     updateLayoutStart();
 }
+
+window.loadGame = play();
