@@ -64,15 +64,6 @@ function insertDisc(element) {
         fieldArray[row][coord[0]] = turn % 2 + 1;
         lowestPositions[coord[0]] = lowestPositions[coord[0]] - 1;
 
-        // Add disc to right cell in table
-        // ----- As long as preview disc is exacly the same as this one, this code is not needed
-        // var updatedCell = document.getElementById(getIdFromCoord([coord[0], row]));
-        // var discSpan = document.createElement("span");
-        // discSpan.classList.add("dot");
-        // discSpan.style.backgroundColor = discColors[turn % 2];
-        // discSpan.id = "player" + (turn % 2 + 1); // Currently not used?
-        // updatedCell.appendChild(discSpan);
-
         if (checkWin([coord[0], row])) {
             console.log("win");
         }
