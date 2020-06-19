@@ -78,28 +78,12 @@ function insertDisc(element) {
 
         // Update turn
         turn++;
-        document.getElementById("turn").innerHTML = turn + 1;
 
         // Save new move
         saveGame();
 
         // Make current player name bold
-        if (turn % 2) {
-            document.getElementById("player2Text").style.fontWeight = "bold";
-            document.getElementById("player1Text").style.fontWeight = "normal";
-            document.getElementById("player2Text").style.color = "white";
-            document.getElementById("player1Text").style.color = "black";
-            document.getElementById("rightPlayer").style.backgroundColor = "black";
-            document.getElementById("leftPlayer").style.backgroundColor = "white";
-
-        } else {
-            document.getElementById("player1Text").style.fontWeight = "bold";
-            document.getElementById("player2Text").style.fontWeight = "normal";
-            document.getElementById("player1Text").style.color = "white";
-            document.getElementById("player2Text").style.color = "black";
-            document.getElementById("leftPlayer").style.backgroundColor = "black";
-            document.getElementById("rightPlayer").style.backgroundColor = "white";
-        }
+        updateLayout();
 
         // Trigger next disc preview, as there is no new mouse-enter
         highlightColumn(document.getElementById(getIdFromCoord([coord[0], row])))
@@ -208,9 +192,13 @@ function loadGame() {
 
         document.getElementById("player1Text").innerHTML = names[0];
         document.getElementById("player2Text").innerHTML = names[1];
-        document.getElementById("turn").innerHTML = turn + 1;
-        document.getElementById("player1Text").style.fontWeight = turn % 2 ? "normal" : "bold";
-        document.getElementById("player2Text").style.fontWeight = turn % 2 ? "bold" : "normal";
+        document.getElementById("player1").style.backgroundColor = discColors[0];
+        document.getElementById("player2").style.backgroundColor = discColors[1];
+        updateLayout();
+
+        if (document.getElementById("fieldDiv").children.length == 0) {
+            createEmptyField();
+        }
 
         var rows = document.getElementById("fieldTable").children;
         for (var r = 0; r < fieldHeight; r++) {
@@ -229,6 +217,29 @@ function loadGame() {
     }
 }
 
+function updateLayout() {
+    // Change bottombar playername color, background and weight based on turn
+    if (turn % 2) {
+        document.getElementById("player2Text").style.fontWeight = "bold";
+        document.getElementById("player1Text").style.fontWeight = "normal";
+        document.getElementById("player2Text").style.color = "white";
+        document.getElementById("player1Text").style.color = "black";
+        document.getElementById("rightPlayer").style.backgroundColor = "black";
+        document.getElementById("leftPlayer").style.backgroundColor = "white";
+
+    } else {
+        document.getElementById("player1Text").style.fontWeight = "bold";
+        document.getElementById("player2Text").style.fontWeight = "normal";
+        document.getElementById("player1Text").style.color = "white";
+        document.getElementById("player2Text").style.color = "black";
+        document.getElementById("leftPlayer").style.backgroundColor = "black";
+        document.getElementById("rightPlayer").style.backgroundColor = "white";
+    }
+
+    // Show new turn
+    document.getElementById("turn").innerHTML = turn + 1;
+}
+
 function updateLayoutStart() {
     // Update player names
     document.getElementById("player1Text").innerHTML = document.getElementById("player1InputName").value;
@@ -241,14 +252,9 @@ function updateLayoutStart() {
     document.getElementById("player1").style.backgroundColor = document.getElementById("player1InputColor").value;
     document.getElementById("player2").style.backgroundColor = document.getElementById("player2InputColor").value;
 
-    //Update turn
-    document.getElementById("turn").innerHTML = turn + 1;
-    document.getElementById("player1Text").style.fontWeight = "bold";
-    document.getElementById("player2Text").style.fontWeight = "normal";
-    document.getElementById("leftPlayer").style.backgroundColor = "black";
-    document.getElementById("leftPlayer").style.backgroundColor = "white";
+    //Update turn-based styles
+    updateLayout()
 }
-
 
 function play() {
     turn = 0;
