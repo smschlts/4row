@@ -173,7 +173,7 @@ function checkWin(coord) {
     if (lengthSameNeighbors(coord, [1, 0], playerId) + lengthSameNeighbors(coord, [-1, 0], playerId) >= 3) { return true }
     // Check diagonal-/ connection
     if (lengthSameNeighbors(coord, [1, -1], playerId) + lengthSameNeighbors(coord, [-1, 1], playerId) >= 3) { return true }
-    // Check horizontal-\ connection
+    // Check diagonal-\ connection
     if (lengthSameNeighbors(coord, [1, 1], playerId) + lengthSameNeighbors(coord, [-1, -1], playerId) >= 3) { return true }
 
     return false;
