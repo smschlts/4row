@@ -263,4 +263,12 @@ function play() {
     updateLayoutStart();
 }
 
+function openPlayerInfo() {
+    document.getElementById("playerinfo").style.display = "block";
+}
+
+function closePlayerInfo() {
+    document.getElementById("playerinfo").style.display = "none";
+}
+
 window.loadGame = play();

@@ -8,23 +8,20 @@
     <script src="script.js" defer></script>
 </head>
 
-
 <body>
-    <div>
-        <input type="text" value="Player 1" placeholder="Player 1" id="player1InputName">
-        <input type="color" value="#FF0000" id="player1InputColor">
-        <input type="text" value="Player 1" placeholder="Player 2" id="player2InputName">
-        <input type="color" value="#FFFF00" id="player2InputColor">
-        <input type="button" id="playButton" value="play" onclick="play()">
+    <div style="position: fixed; right: 0px; top: 3vw; width: 15%; text-align: center;">
+        <div class="corner turn">Turn <b id="turn"> 1 </b></div>
+        <button onclick="openPlayerInfo()" class="corner">Edit Players</button>
+        <button onclick="play()" class="corner">Restart</button>
     </div>
+
     <div id="fieldDiv"></div>
 
-
-    <div id="bottomBar" style="height: 100px; text-align: center; margin-top: 1vw;">
+    <div id="bottomBar" style="height: 6vw; text-align: center; margin-top: 1vw;">
         <div id="leftPlayer" class="playernamediv left">
             <div class="discdiv left">
                 <span class="dot left" id='player1'></span>
-                <b class="playername left" id="player1Text">Player 1</b>
+                <b class="playername left" id="player1Text">Player1</b>
             </div>
         </div>
         <div style="height: 100%; display: inline-block; position: relative;">
@@ -32,15 +29,29 @@
         </div>
         <div id="rightPlayer" class="playernamediv right">
             <div class="discdiv right">
-                <b class="playername right" id="player2Text">Player 2</b>
+                <b class="playername right" id="player2Text">Player2</b>
                 <span class="dot right" id='player2'></span>
             </div>
         </div>
     </div>
-    </span>
-    Turn <b id="turn"> 1 </b>
-    </div>
+
     <input type="button" value="LoadDebug" onclick="loadGame()">
+
+    <div class="playerinfo-popup" id="playerinfo">
+        <form action="/action_page.php" class="playerinfo-container">
+            <h1>Player Information</h1>
+
+            <label><b>Player 1</b></label>
+            <input type="text" id="player1InputName" value="Player 1" placeholder="Enter Player 1 Name">
+            <input type="color" value="#FF0000" id="player1InputColor">
+
+            <label><b>Player 2</b></label>
+            <input type="text" id="player2InputName" value="Player 2" placeholder="Enter Player 1 Name">
+            <input type="color" value="#FF0000" id="player2InputColor">
+
+            <button type="button" class="btn cancel" onclick="closePlayerInfo()">Close</button>
+        </form>
+    </div>
 </body>
 
 </html>
