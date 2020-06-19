@@ -57,12 +57,8 @@ td:after {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-}
-
-.discdiv:after {
-    content: '';
-    display: block;
-    margin-top: 100%;
+    margin-left: 1vw;
+    margin-right: 1vw;
 }
 
 .playernamediv {

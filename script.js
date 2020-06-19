@@ -87,9 +87,18 @@ function insertDisc(element) {
         if (turn % 2) {
             document.getElementById("player2Text").style.fontWeight = "bold";
             document.getElementById("player1Text").style.fontWeight = "normal";
+            document.getElementById("player2Text").style.color = "white";
+            document.getElementById("player1Text").style.color = "black";
+            document.getElementById("rightPlayer").style.backgroundColor = "black";
+            document.getElementById("leftPlayer").style.backgroundColor = "white";
+
         } else {
             document.getElementById("player1Text").style.fontWeight = "bold";
             document.getElementById("player2Text").style.fontWeight = "normal";
+            document.getElementById("player1Text").style.color = "white";
+            document.getElementById("player2Text").style.color = "black";
+            document.getElementById("leftPlayer").style.backgroundColor = "black";
+            document.getElementById("rightPlayer").style.backgroundColor = "white";
         }
 
         // Trigger next disc preview, as there is no new mouse-enter
@@ -236,6 +245,8 @@ function updateLayoutStart() {
     document.getElementById("turn").innerHTML = turn + 1;
     document.getElementById("player1Text").style.fontWeight = "bold";
     document.getElementById("player2Text").style.fontWeight = "normal";
+    document.getElementById("leftPlayer").style.backgroundColor = "black";
+    document.getElementById("leftPlayer").style.backgroundColor = "white";
 }
 
 
