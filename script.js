@@ -260,6 +260,16 @@ function openPlayerInfo() {
 
 function closePlayerInfo() {
     document.getElementById("playerinfo").style.display = "none";
+
+    // Update visuals with player names and colors
+    document.getElementById("player1Text").innerHTML = document.getElementById("player1InputName").value.slice(0, maxNameLength);
+    document.getElementById("player2Text").innerHTML = document.getElementById("player2InputName").value.slice(0, maxNameLength);
+    discColors[0] = document.getElementById("player1InputColor").value;
+    discColors[1] = document.getElementById("player2InputColor").value;
+    document.getElementById("player1").style.backgroundColor = document.getElementById("player1InputColor").value;
+    document.getElementById("player2").style.backgroundColor = document.getElementById("player2InputColor").value;
+
+
 }
 
 window.loadGame = play();
