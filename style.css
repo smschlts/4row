@@ -51,6 +51,26 @@ td:after {
     float: right;
 }
 
+.discdiv {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    top: 50%;
+    transform: translate(0%, -50%);
+}
+
+.playernamediv {
+    width: 35%;
+    height: 60px;
+}
+
+.playername {
+    height: 100%;
+    font-size: 4vh;
+    margin-left: 35px;
+    margin-right: 35px;
+}
+
 
 /* not used */
 
