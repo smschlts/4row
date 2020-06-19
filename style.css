@@ -72,14 +72,3 @@ td:after {
     margin-left: 4vw;
     margin-right: 4vw;
 }
-
-
-/* not used */
-
-.dot#player1 {
-    background-color: lightcoral;
-}
-
-.dot#player2 {
-    background-color: lightskyblue;
-}
