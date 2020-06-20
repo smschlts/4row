@@ -13,6 +13,7 @@ const maxNameLength = 11;
 var fieldArray;
 var lowestPositions;
 var turn = 0;
+var gameFinished = false;
 var discColors = ['lightcoral', 'lightskyblue']
 
 function createEmptyField() {
@@ -76,6 +77,13 @@ function insertDisc(element) {
             // Show dialog who won
             console.log("win");
             alert(name + " has won!");
+
+            // Mark game as finished
+            gameFinished = true;
+
+            // Save and don't update layout
+            saveGame();
+            return;
         }
 
         // Update turn
@@ -104,6 +112,9 @@ function getCoordFromId(id) {
 }
 
 function highlightColumn(element, doHighlight = true) {
+    // Don't highlight when game is finished
+    if (gameFinished) { return; }
+
     // Get hover coordinates
     var coord = getCoordFromId(element.id);
     //console.log("Hoover coordinates: ", coord);
@@ -181,6 +192,7 @@ function saveGame() {
         localStorage.setItem("lowest", JSON.stringify(lowestPositions));
         localStorage.setItem("colors", JSON.stringify(discColors));
         localStorage.setItem("names", JSON.stringify([document.getElementById("player1Text").innerHTML, document.getElementById("player2Text").innerHTML]))
+        localStorage.setItem("finished", JSON.stringify(gameFinished));
     }
 }
 
@@ -191,6 +203,7 @@ function loadGame() {
         lowestPositions = JSON.parse(localStorage.lowest);
         discColors = JSON.parse(localStorage.colors);
         var names = JSON.parse(localStorage.names);
+        gameFinished = JSON.parse(localStorage.finished);
 
         document.getElementById("player1Text").innerHTML = names[0];
         document.getElementById("player2Text").innerHTML = names[1];
