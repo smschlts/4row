@@ -81,6 +81,9 @@ function insertDisc(element) {
             // Mark game as finished
             gameFinished = true;
 
+            // Unmark currently highlighted column
+            highlightColumn(coord[0], false);
+
             // Save and don't update layout
             saveGame();
             return;
