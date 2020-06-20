@@ -65,7 +65,17 @@ function insertDisc(element) {
         lowestPositions[coord[0]] = lowestPositions[coord[0]] - 1;
 
         if (checkWin([coord[0], row])) {
+            // Get winning player name
+            var name = "";
+            if (turn % 2) {
+                name = document.getElementById("player2Text").innerText;
+            } else {
+                name = document.getElementById("player1Text").innerText;
+            }
+
+            // Show dialog who won
             console.log("win");
+            alert(name + " has won!");
         }
 
         // Update turn
