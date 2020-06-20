@@ -209,6 +209,11 @@ function saveGame() {
 
 function loadGame() {
     if (typeof(Storage) !== "undefined") {
+        // Check if there is something to load
+        if (!localStorage.getItem("turn")) {
+            return;
+        }
+
         turn = parseInt(localStorage.turn);
         fieldArray = JSON.parse(localStorage.board);
         lowestPositions = JSON.parse(localStorage.lowest);
@@ -282,11 +287,18 @@ function updateLayoutStart() {
     updateLayout()
 }
 
-function play() {
+function play(first = false) {
     turn = 0;
     gameFinished = false;
     createEmptyField();
     updateLayoutStart();
+
+    if (first) {
+        loadGame()
+    }
+
+    // Make sure game is immediatly saved when new game has started
+    saveGame()
 }
 
 function openPlayerInfo() {
@@ -307,4 +319,4 @@ function closePlayerInfo() {
 
 }
 
-window.loadGame = play();
+window.onload = play(true);
