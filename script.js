@@ -31,8 +31,8 @@ function createEmptyField() {
         for (var c = 0; c < fieldWidth; c++) {
             var cell = document.createElement("td");
             cell.id = getIdFromCoord([c, r])
-            cell.setAttribute('onmouseover', "highlightColumn(this)");
-            cell.setAttribute('onmouseout', "highlightColumn(this, false)");
+            cell.setAttribute('onmouseover', "onColumnClick(this)");
+            cell.setAttribute('onmouseout', "onColumnClick(this, false)");
             cell.setAttribute('onclick', "insertDisc(this)");
 
             row.appendChild(cell);
@@ -96,7 +96,7 @@ function insertDisc(element) {
         updateLayout();
 
         // Trigger next disc preview, as there is no new mouse-enter
-        highlightColumn(document.getElementById(getIdFromCoord([coord[0], row])))
+        addDiscInColumn(coord[0]);
     } else {
         console.log("Column " + coord[0] + " full");
     }
@@ -111,17 +111,21 @@ function getCoordFromId(id) {
     return [parseInt(splitId[1]), parseInt(splitId[2])];
 }
 
-function highlightColumn(element, doHighlight = true) {
-    // Don't highlight when game is finished
-    if (gameFinished) { return; }
+function onColumnClick(element, enter = true) {
+    if (!gameFinished) {
+        // Get column
+        var coord = getCoordFromId(element.id);
 
-    // Get hover coordinates
-    var coord = getCoordFromId(element.id);
-    //console.log("Hoover coordinates: ", coord);
+        // Change column and disc
+        highlightColumn(coord[0], enter);
+        addDiscInColumn(coord[0], enter);
+    }
+}
 
+function highlightColumn(column, doHighlight = true) {
     // highlight each cell in column
     for (var r = 0; r < fieldHeight; r++) {
-        var cell = document.getElementById(getIdFromCoord([coord[0], r]));
+        var cell = document.getElementById(getIdFromCoord([column, r]));
 
         if (doHighlight) {
             cell.classList.add("highlight");
@@ -130,21 +134,22 @@ function highlightColumn(element, doHighlight = true) {
         }
     }
 
-    //Add disc preview
-    var lowestPosition = lowestPositions[coord[0]];
-    if (lowestPosition != -1) {
-        var updatedCell = document.getElementById(getIdFromCoord([coord[0], lowestPosition]));
 
-        if (doHighlight) {
+}
+
+function addDiscInColumn(column, doAdd = true) {
+    var lowestPosition = lowestPositions[column];
+    if (lowestPosition != -1) {
+        var updatedCell = document.getElementById(getIdFromCoord([column, lowestPosition]));
+
+        if (doAdd) {
             var discSpan = document.createElement("span");
             discSpan.classList.add("dot");
             discSpan.style.backgroundColor = discColors[turn % 2];
-            discSpan.id = "player" + (turn % 2 + 1); // Currently not used?
             updatedCell.appendChild(discSpan);
         } else {
             updatedCell.innerHTML = "";
         }
-
     }
 }
 
