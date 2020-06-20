@@ -281,6 +281,7 @@ function updateLayoutStart() {
 
 function play() {
     turn = 0;
+    gameFinished = false;
     createEmptyField();
     updateLayoutStart();
 }
