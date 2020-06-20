@@ -53,6 +53,9 @@ function createEmptyField() {
 }
 
 function insertDisc(element) {
+    // if game is finished no disc can be added
+    if (gameFinished) { return; }
+
     // Get coordinate of click
     var coord = getCoordFromId(element.id);
 
